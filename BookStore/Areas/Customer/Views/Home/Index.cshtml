@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model IEnumerable<ProductModel>
+<div class="col-12 m-2 row g-4">
+    @foreach (var item in Model)
+    {
+        <div class="card col-sm-12 col-md-6 col-3 me-3 p-1" style="width: 18rem;">
+
+            <img src="@(item.ImageUrl)" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h4 class="card-title">@item.Title</h4>
+                <h6 class="card-subtitle mb-1">@item.Author</h6>
+                <p class="text-uppercase">@item.Category.Name</p>
+                <p>
+                    <span class="me-2 fs-3">Price :</span>
+                    <span class="me-2 text-decoration-line-through text-secondary">$@item.ListPrice</span>
+                    <span class="text-primary fw-bolder">$@item.Price</span>
+                </p>
+                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-Id="@item.ProductId" class="btn btn-primary w-75 card-link">Details</a>
+            </div>
+        </div>
+    }
+</div>

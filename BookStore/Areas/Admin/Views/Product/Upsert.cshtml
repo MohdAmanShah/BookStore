@@ -1,0 +1,88 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = Model.Product.ProductId == 0 ? "Add New Product" : $"{Model.Product.Title}";
+}
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">
+                    @(Model.Product.ProductId == 0 ? "Add New Product" : "Edit Product")
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body ps-4">
+        <div class="row">
+            <div class="col-6">
+                <form method="post" enctype="multipart/form-data" class="form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input asp-for="Product.ProductId" hidden />
+                    <input asp-for="Product.ImageUrl" hidden />
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Title</span>
+                        <input type="text" class="form-control" placeholder="Name" aria-label="Name" asp-for="@Model.Product.Title">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Description" asp-for="Product.Description" style="height: 200px"></textarea>
+                        <label asp-for="Product.Description">Description</label>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Author</span>
+                        <input type="text" class="form-control" placeholder="Author" aria-label="Author" asp-for="Product.Author">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">ISBN</span>
+                        <input type="text" class="form-control" placeholder="ISBN" aria-label="ISBN" asp-for="Product.ISBN">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">List Price</span>
+                        <input class="form-control" placeholder="List Price" aria-label="ListPrice" asp-for="Product.ListPrice">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Price</span>
+                        <input class="form-control" placeholder="Price" aria-label="Price" asp-for="Product.Price">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Price for 50</span>
+                        <input class="form-control" placeholder="Price for 50" aria-label="Price50" asp-for="Product.Price50">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Price for 100</span>
+                        <input class="form-control" placeholder="Price for 100" aria-label="Price100" asp-for="Product.Price100">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" asp-for="Product.CategoryId">Options</label>
+                        <select class="form-select" asp-for="Product.CategoryId">
+                            <option disabled selected>--Select Category--</option>
+                            @foreach (var item in Model.Categories)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="file">
+                        <label class="input-group-text">Upload Cover Image</label>
+                    </div>
+                    <button class="btn btn-outline-secondary px-5" type="submit">
+                        @(Model.Product.ProductId == 0 ? "ADD" : "UPDATE")
+                    </button>
+                    @if (Model.Product.ProductId != 0)
+                    {
+                        <a class=" btn btn-outline-secondary" asp-area="Admin" asp-controller="Product" asp-action="AddImages" asp-route-Id="@Model.Product.ProductId">Manage Product Images</a>
+                    }
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="Product" asp-action="Index">Back To List</a>
+                </form>
+            </div>
+            <div class="col-6">
+                <img alt="@Model.Product.Title" width="80%" src="@(Model.Product.ImageUrl)" />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model Category
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Insert New Category" : "Edit Category";
+}
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">
+                    @(Model.Id == 0 ? "Insert New Category" : "Edit Category")
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+                <form method="post" class="form p-4">
+                    <div asp-validation-summary="All" class="text-danger" ></div>
+                    <input asp-for="Id" hidden />
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Name</span>
+                        <input type="text" class="form-control" placeholder="Name" aria-label="Name" asp-for="@Model.Name">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            @(Model.Id == 0 ? "Insert" : "Update")
+                        </button>
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </form>
+                <a class="btn btn-secondary" type="button" asp-area="Admin" asp-controller="Category" asp-action="Index">Back To List</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

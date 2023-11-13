@@ -1,0 +1,39 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = $"{Model.Title} - Images";
+}
+
+<div class="col-12 m-2 row g-4">
+    <div class="col-12 pt-md-5">
+        <a class="btn btn-danger" asp-area="Admin" asp-controller="Product" asp-action="RemoveAllImages" asp-route-Id="@Model.ProductId">Remove All</a>
+        <a class="btn btn-secondary" asp-action="Index">Back To List</a>
+    </div>
+    <form method="post" class="form" enctype="multipart/form-data">
+        <input asp-for="@Model.ProductId" hidden />
+        <div class="mb-3 p-1">
+            <div class="p-3 mb-2">
+                <label for="Image-Input" class="pe-auto">
+                    <img src="/Images/AddMoreImages.png" style="width: 10rem; height:10rem" />
+                </label>
+                <input id="Image-Input" type="file" name="files" multiple hidden>
+            </div>
+            <button class="btn btn-outline-secondary px-2 mb-2" type="submit">
+                Add Images
+            </button>
+        </div>
+    </form>
+    @if (Model.Images != null)
+    {
+        @foreach (var item in Model.Images)
+        {
+            <div class="card col-sm-12 col-md-6 col-3 me-3 p-1 border-2" style="width: 18rem; height:auto;">
+
+                <img src="@(item.Url)" class="card-img-top" alt="..." style="margin: auto; width: 16rem; height:16rem;">
+                <div class="card-body">
+                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Product" asp-action="DeleteImage" asp-route-Id="@item.Id">
+                        Delete Image</a>
+                </div>
+            </div>
+        }
+    }
+</div>
