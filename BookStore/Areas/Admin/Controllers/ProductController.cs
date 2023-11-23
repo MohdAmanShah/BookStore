@@ -100,6 +100,7 @@ namespace BookStore.Areas.Admin.Controllers
                     ProductId = model.Product.ProductId,
                     Url = model.Product.ImageUrl,
                 });
+                unitOfWork.ProductRepository.Update(model.Product);
                 unitOfWork.Commit();
                 return RedirectToAction(nameof(AddImages), new
                 {
@@ -150,7 +151,7 @@ namespace BookStore.Areas.Admin.Controllers
                 }
                 if (model.ImageUrl == null || model.ImageUrl == ImagePlaceHolders.ProductImage)
                 {
-                    model.ImageUrl = model.Images[0].Url.Remove(0, 1);
+                    model.ImageUrl = model.Images[0].Url.TrimStart('\\');
                 }
                 unitOfWork.ProductRepository.Update(model);
                 unitOfWork.Commit();
