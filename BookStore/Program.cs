@@ -38,11 +38,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-builder.Services.AddAuthentication().AddFacebook(option =>
-{
-    option.AppId = builder.Configuration.GetSection("FacebookLogin:AppId").Get<String>();
-    option.AppSecret = builder.Configuration.GetSection("FacebookLogin:Secret").Get<String>();
-});
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 var app = builder.Build();
 
